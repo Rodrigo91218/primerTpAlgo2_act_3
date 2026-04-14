@@ -27,12 +27,13 @@ namespace primerTpAlgo2_act_3
 
 
 
-            int opcion, cantItems=0, cant=0, index=0, i=0, j=1;
+            int opcion, cantItems=0, cant=0, i=0, j=1, indiceMax = 0, cantTotalItems = 0;
             List<string> articulos = new List<string>();
             List<double> precios = new List<double>();
             List<int> cantidad = new List<int>();
-            double precio = 0;
+            double precio = 0, sumaPrecioPorArticulo=0, sumaPrecios = 0; ;
             string nombre;
+
             do
             {
                 Console.Clear(); //Con eso limpiamos la pantalla cada vez que mostramos el menú, pueden sacarlo si no quieren
@@ -52,7 +53,7 @@ namespace primerTpAlgo2_act_3
                 switch (opcion)
                 {
                     case 1:
-                        Console.Clear();
+                        #region Case1
                         Console.BackgroundColor = ConsoleColor.White;
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine("Responsabe inscripto. Se dicriminara el 10,5%.");
@@ -66,7 +67,7 @@ namespace primerTpAlgo2_act_3
 
                         for( i = 0; i < cantItems; i++)
                         {
-                            Console.Clear();
+                            
                             Console.Write($"Ingrese el nombre del articulo N°{j}: ");
                             nombre=Console.ReadLine();
                             articulos.Add(nombre);
@@ -76,27 +77,26 @@ namespace primerTpAlgo2_act_3
 
                                 Console.Write("Ingrese solo números para el precio: $");
                             }
-                            precios.Add(precio);
+                            
                             Console.Write("Ingrese la cantidad de articulos: ");
                             while(!int.TryParse(Console.ReadLine(),out cant))
                             {
                                 Console.Write("Error!. Se esperan solo números enteros.");
                             }
                             cantidad.Add(cant);
+                            sumaPrecioPorArticulo=precio*cant;
+                            precios.Add(sumaPrecioPorArticulo);
                             Console.BackgroundColor= ConsoleColor.Green;
                             Console.ForegroundColor= ConsoleColor.Black;
-                            Console.WriteLine(" ¡Item ingresado a la factura con Exito!. Oprima cualquier tecla para continuar. ");
+                            Console.WriteLine(" ¡Item cargado con Exito!. Oprima cualquier tecla para continuar. ");
                             Console.ResetColor();
                             Console.ReadKey();
                             
                             j++;
                         }
 
-                        Console.WriteLine("El item de mayor valor que se ingreso fue: ");
-                        int indiceMax = 0;
                         double valorMax = precios[0];
-
-                        for (i = 1; i < precios.Count; i++)
+                        for (i = 0; i < precios.Count; i++)
                         {
                             if (precios[i] > valorMax)
                             {
@@ -105,29 +105,193 @@ namespace primerTpAlgo2_act_3
                             }
                         }
 
+                        foreach (double p in precios)
+                        {
+                            sumaPrecios += p;
+                        }
+
+                        foreach(int c in cantidad)
+                        {
+                            cantTotalItems += c;
+                        }
+                        
+                        Console.WriteLine("Datos de la factura");
+                        Console.WriteLine("El item de mayor valor que se ingreso fue: ");
+                        Console.WriteLine($"-Articulo: {articulos[indiceMax]}, precio: ${precios[indiceMax]}, cantidad: {cantidad[indiceMax]}.");
+                        Console.WriteLine($"El total de todos los items es: ${sumaPrecios}. El total de items cargados es: {cantTotalItems}.");
+                        Console.WriteLine($"Promedio de importe: ${sumaPrecios/cantItems}. ");
+                        Console.WriteLine($"Iva: ${sumaPrecios*0.105}");
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         Console.ForegroundColor = ConsoleColor.Black;
-                        Console.WriteLine($"-Articulo: {articulos[indiceMax]}, precio: ${precios[indiceMax]}, cantidad: {cantidad[indiceMax]}.");
+                        Console.WriteLine($"Precio neto + IVA: ${sumaPrecios*1.105}.");
                         Console.ResetColor();
                         Console.ReadKey ();
-
+                        #endregion
                         break;
                     case 2:
-                        Console.WriteLine("Acá va el código de la opción 2.\n");
+                        Console.WriteLine("consumidor final, se aplicara el 21%.");
+                        #region Case2
+                        //Console.Clear();
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.WriteLine("Responsabe inscripto. Se dicriminara el 10,5%.");
+                        Console.ResetColor();
+                        Console.Write("\nIngrese la cantidad de items: ");
+                        while (!int.TryParse(Console.ReadLine(), out cantItems) || cantItems <= 0)
+                        {
+
+                            Console.Write("Valor incorrecto, se esperan solo números enteros mayores a 0 (cero): ");
+                        }
+
+                        for (i = 0; i < cantItems; i++)
+                        {
+
+                            Console.Write($"Ingrese el nombre del articulo N°{j}: ");
+                            nombre = Console.ReadLine();
+                            articulos.Add(nombre);
+                            Console.Write("Ingrese el precio del articulo: $");
+                            while (!double.TryParse(Console.ReadLine(), out precio))
+                            {
+
+                                Console.Write("Ingrese solo números para el precio: $");
+                            }
+
+                            Console.Write("Ingrese la cantidad de articulos: ");
+                            while (!int.TryParse(Console.ReadLine(), out cant))
+                            {
+                                Console.Write("Error!. Se esperan solo números enteros.");
+                            }
+                            cantidad.Add(cant);
+                            sumaPrecioPorArticulo = precio * cant;
+                            precios.Add(sumaPrecioPorArticulo);
+                            Console.BackgroundColor = ConsoleColor.Green;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.WriteLine(" ¡Item cargado con Exito!. Oprima cualquier tecla para continuar. ");
+                            Console.ResetColor();
+                            Console.ReadKey();
+
+                            j++;
+                        }
+
+                        double valorMax2 = precios[0];
+                        for (i = 0; i < precios.Count; i++)
+                        {
+                            if (precios[i] > valorMax2)
+                            {
+                                valorMax2 = precios[i];
+                                indiceMax = i;
+                            }
+                        }
+
+                        foreach (double p in precios)
+                        {
+                            sumaPrecios += p;
+                        }
+
+                        foreach (int c in cantidad)
+                        {
+                            cantTotalItems += c;
+                        }
+
+                        Console.WriteLine("Datos de la factura");
+                        Console.WriteLine("El item de mayor valor que se ingreso fue: ");
+                        Console.WriteLine($"-Articulo: {articulos[indiceMax]}, precio: ${precios[indiceMax]}, cantidad: {cantidad[indiceMax]}.");
+                        Console.WriteLine($"El total de todos los items es: ${sumaPrecios}. El total de items cargados es: {cantTotalItems}.");
+                        Console.WriteLine($"Promedio de importe: ${sumaPrecios / cantItems}. ");
+                        Console.WriteLine($"Iva: ${sumaPrecios * 0.21}");
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.WriteLine($"Precio neto + IVA: ${sumaPrecios * 1.21}.");
+                        Console.ResetColor();
+                        Console.ReadKey();
+                        #endregion
                         break;
                     case 3:
-                        Console.WriteLine("Acá va el código de la opción 3.\n");
+                        
+                        #region Case3
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.WriteLine("bienes y servicios, tiene una deducción del 27%.\n");
+                        Console.ResetColor();
+                        Console.Write("\nIngrese la cantidad de items: ");
+                        while (!int.TryParse(Console.ReadLine(), out cantItems) || cantItems <= 0)
+                        {
+
+                            Console.Write("Valor incorrecto, se esperan solo números enteros mayores a 0 (cero): ");
+                        }
+
+                        for (i = 0; i < cantItems; i++)
+                        {
+
+                            Console.Write($"Ingrese el nombre del articulo N°{j}: ");
+                            nombre = Console.ReadLine();
+                            articulos.Add(nombre);
+                            Console.Write("Ingrese el precio del articulo: $");
+                            while (!double.TryParse(Console.ReadLine(), out precio))
+                            {
+
+                                Console.Write("Ingrese solo números para el precio: $");
+                            }
+
+                            Console.Write("Ingrese la cantidad de articulos: ");
+                            while (!int.TryParse(Console.ReadLine(), out cant))
+                            {
+                                Console.Write("Error!. Se esperan solo números enteros.");
+                            }
+                            cantidad.Add(cant);
+                            sumaPrecioPorArticulo = precio * cant;
+                            precios.Add(sumaPrecioPorArticulo);
+                            Console.BackgroundColor = ConsoleColor.Green;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.WriteLine(" ¡Item cargado con Exito!. Oprima cualquier tecla para continuar. ");
+                            Console.ResetColor();
+                            Console.ReadKey();
+
+                            j++;
+                        }
+
+                        double valorMax3 = precios[0];
+                        for (i = 0; i < precios.Count; i++)
+                        {
+                            if (precios[i] > valorMax3)
+                            {
+                                valorMax3 = precios[i];
+                                indiceMax = i;
+                            }
+                        }
+
+                        foreach (double p in precios)
+                        {
+                            sumaPrecios += p;
+                        }
+
+                        foreach (int c in cantidad)
+                        {
+                            cantTotalItems += c;
+                        }
+
+                        Console.WriteLine("Datos de la factura");
+                        Console.WriteLine("El item de mayor valor que se ingreso fue: ");
+                        Console.WriteLine($"-Articulo: {articulos[indiceMax]}, precio: ${precios[indiceMax]}, cantidad: {cantidad[indiceMax]}.");
+                        Console.WriteLine($"El total de todos los items es: ${sumaPrecios}. El total de items cargados es: {cantTotalItems}.");
+                        Console.WriteLine($"Promedio de importe: ${sumaPrecios / cantItems}. ");
+                        /*Console.WriteLine($"Iva: ${sumaPrecios * 0.27}");
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.WriteLine($"Precio neto + IVA: ${sumaPrecios * 1.27}.");*/
+                        Console.ResetColor();
+                        Console.ReadKey();
+                        #endregion
                         break;
                    
 
                 }
-                //Console.WriteLine("\nPresione una tecla para continuar...");
-                //Console.ReadKey(); //esto es para que se vea el resultado antes de limpiar la pantalla
+              
 
             } while (opcion != 0);
             Console.BackgroundColor = ConsoleColor.Yellow;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(" Se ingreso el valor 0, se finalizara el programa.¡Hasta luego! ");
+            Console.WriteLine(" Se ingreso el valor 0, programa finalizado.¡Hasta luego! ");
             Console.ResetColor();
 
             Console.ReadKey();
