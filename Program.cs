@@ -275,10 +275,10 @@ namespace primerTpAlgo2_act_3
                         Console.WriteLine($"-Articulo: {articulos[indiceMax]}, precio: ${precios[indiceMax]}, cantidad: {cantidad[indiceMax]}.");
                         Console.WriteLine($"El total de todos los items es: ${sumaPrecios}. El total de items cargados es: {cantTotalItems}.");
                         Console.WriteLine($"Promedio de importe: ${sumaPrecios / cantItems}. ");
-                        /*Console.WriteLine($"Iva: ${sumaPrecios * 0.27}");
+                        Console.WriteLine($"Iva: ${sumaPrecios * 0.27}");
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         Console.ForegroundColor = ConsoleColor.Black;
-                        Console.WriteLine($"Precio neto + IVA: ${sumaPrecios * 1.27}.");*/
+                        Console.WriteLine($"Precio neto - IVA: ${sumaPrecios * 0.73}.");
                         Console.ResetColor();
                         Console.ReadKey();
                         #endregion
